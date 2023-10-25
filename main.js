@@ -3,6 +3,7 @@ const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
 const board = [];
 let rotatedShape;
+let gameOver = false;
 
 // iniciar tablero
 for (let row = 0; row < BOARD_HEIGHT; row++) {
@@ -77,6 +78,9 @@ let currentGhostTetromino;
 
 // Dibujar tetromino
 function drawTetromino() {
+  if (gameOver) {
+    return;
+  }
   const shape = currentTetromino.shape;
   const color = currentTetromino.color;
   const row = currentTetromino.row;
@@ -216,8 +220,11 @@ function clearRows() {
   return rowsCleared;
 }
 
-// Rotate the tetromino
+// Rotar tetromino
 function rotateTetromino() {
+  if (gameOver) {
+    return;
+  }
   rotatedShape = [];
   for (let i = 0; i < currentTetromino.shape[0].length; i++) {
     let row = [];
@@ -227,7 +234,7 @@ function rotateTetromino() {
     rotatedShape.push(row);
   }
 
-  // Check if the rotated tetromino can be placed
+  // Verificar si el tetromino rotado se puede mover
   if (canTetrominoRotate()) {
     eraseTetromino();
     currentTetromino.shape = rotatedShape;
@@ -237,8 +244,11 @@ function rotateTetromino() {
   moveGhostTetromino();
 }
 
-// Move the tetromino
+// Mover tetromino
 function moveTetromino(direction) {
+  if (gameOver) {
+    return; 
+  }
   let row = currentTetromino.row;
   let col = currentTetromino.col;
   if (direction === "left") {
@@ -265,6 +275,8 @@ function moveTetromino(direction) {
       currentTetromino.col = col;
       currentTetromino.row = row;
       drawTetromino();
+    } else if(row <= 0) {
+      gameOver = true;
     } else {
       lockTetromino();
     }
@@ -274,25 +286,26 @@ function moveTetromino(direction) {
 }
 
 drawTetromino();
-setInterval(moveTetromino, 500);
+setInterval(moveTetromino, 1000);
 
 document.addEventListener("keydown", handleKeyPress);
 
 function handleKeyPress(event) {
+  console.log(event.keyCode)
   switch (event.keyCode) {
-    case 37: // left arrow
+    case 37: // flecha izquierda
       moveTetromino("left");
       break;
-    case 39: // right arrow
+    case 39: // flecha derecha
       moveTetromino("right");
       break;
-    case 40: // down arrow
+    case 40: // flecha abajo
       moveTetromino("down");
       break;
-    case 38: // up arrow
+    case 38: // flecha arriba
       rotateTetromino();
       break;
-    case 32: // up arrow
+    case 32: // espacio
       dropTetromino();
       break;
     default:
@@ -300,19 +313,9 @@ function handleKeyPress(event) {
   }
 }
 
-// sound init
-document.body.addEventListener("click", () => {
-  bgm.play();
-  bgm.muted = false;
-  drop.muted = false;
-});
-
 function dropTetromino() {
   let row = currentTetromino.row;
   let col = currentTetromino.col;
-
-  drop.muted = false;
-  drop.play();
 
   while (canTetrominoMove(1, 0)) {
     eraseTetromino();
@@ -326,6 +329,9 @@ function dropTetromino() {
 
 // Draw Ghost tetromino
 function drawGhostTetromino() {
+  if (gameOver) {
+    return;
+  }
   const shape = currentGhostTetromino.shape;
   const color = "rgba(255,255,255,0.5)";
   const row = currentGhostTetromino.row;
@@ -376,6 +382,10 @@ function moveGhostTetromino() {
   currentGhostTetromino = { ...currentTetromino };
   while (canGhostTetrominoMove(1, 0)) {
     currentGhostTetromino.row++;
+  }
+
+  function lostGame(){
+
   }
 
   drawGhostTetromino();

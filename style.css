@@ -11,6 +11,7 @@ body {
 .logo {
     display: block;
     margin: 0 auto 20px;
+    width: 30rem;
 }
 
 #game_board {
