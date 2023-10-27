@@ -3,15 +3,21 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     margin: 0;
     padding: 0;
 }
 
 .logo {
     display: block;
-    margin: 0 auto 20px;
+    margin: 200px auto 0;
     width: 30rem;
+}
+
+.jugar{
+    display: block;
+    margin: 200px auto 300px;
+    padding: 1rem 3rem;
 }
 
 #game_board {
@@ -25,6 +31,7 @@ body {
                 63,
                 0.8) 20px, rgba(23, 27, 63, 0.8) 40px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    display: none;
 }
 
 .block {
