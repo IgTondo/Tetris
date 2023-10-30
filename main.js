@@ -1,7 +1,3 @@
-if($(".game_board").css("display") == "none"){
-  
-}
-
 // Game board setup
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
