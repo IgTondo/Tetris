@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#boton").click(function (e) { 
         e.preventDefault();
         $("#boton").animate({opacity: "0"}, 1000);
-        $(".logo").delay(1000).animate({marginTop: "50px"}, 1000);
-        $("#gameboard").delay(2000).fadeIn(1000);
+        $(".logo").delay(1000).animate({marginTop: "-100px"}, 1000);
+        $("#game_board").delay(2000).show(1000);
     });
 });
