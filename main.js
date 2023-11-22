@@ -304,8 +304,9 @@ function moveTetromino(direction) {
       currentTetromino.row = row;
       drawTetromino();
     } else if (row <= 0) {
-
+      console.log("Game Over");
       gameOver = true;
+      lostGame();
     } else {
 
       lockTetromino();
@@ -387,11 +388,11 @@ function moveGhostTetromino() {
     currentGhostTetromino.row++;
   }
 
-  function lostGame() {
-    
-  }
-
   drawGhostTetromino();
+}
+
+function lostGame() {
+  window.location.href = "gameover.html";
 }
 
 let started = false;
